@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>FixKar</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--or:#FF6B00;--or2:#FF8C38;--tl:#00D4AA;--bg:#0D0D1A;--bg2:#16213E;--nv:#1A1A2E;--cd:#1E2A45;--bd:rgba(255,255,255,0.08);--tx:#F8F9FA;--t2:#94A3B8;--ok:#10B981;--wn:#F59E0B;--er:#EF4444}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden}
+h1,h2,h3{font-family:'Poppins',sans-serif}
+.page{display:none;flex-direction:column;min-height:100vh}
+.page.show{display:flex}
+.btn{flex:1;padding:15px;border:none;border-radius:14px;font-family:'Poppins',sans-serif;font-weight:600;font-size:15px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.bp{background:linear-gradient(135deg,var(--or),var(--or2));color:#fff}
+.bg2{background:var(--cd);color:var(--t2);border:1px solid var(--bd)}
+.bt{background:linear-gradient(135deg,var(--tl),#00B894);color:var(--nv)}
+.brd{background:linear-gradient(135deg,var(--er),#C0392B);color:#fff}
+.bfw{width:100%;flex:none}
+.bsm{padding:10px 16px;font-size:13px;border-radius:10px}
+.lbl{font-size:13px;font-weight:500;color:var(--t2);margin-bottom:7px;display:block}
+.inp{width:100%;padding:13px 15px;background:var(--cd);border:1px solid var(--bd);border-radius:10px;color:var(--tx);font-size:15px;outline:none;font-family:'Inter',sans-serif;margin-bottom:14px;transition:border .2s}
+.inp:focus{border-color:var(--or)}
+.inp::placeholder{color:var(--t2)}
+.inp-row{display:flex;gap:8px}
+.logo{display:flex;align-items:center;gap:10px;margin-bottom:28px}
+.logo-ic{width:42px;height:42px;background:linear-gradient(135deg,var(--or),var(--or2));border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo-tx{font-weight:700;font-size:20px}.logo-tx b{color:var(--or)}
+.bk{width:38px;height:38px;border-radius:11px;background:var(--cd);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;margin-bottom:18px}
+.vb{background:rgba(0,212,170,.15);color:var(--tl);font-size:10px;font-weight:600;padding:2px 7px;border-radius:99px;display:inline-block;margin-top:6px}
+.ch{display:inline-flex;align-items:center;padding:3px 9px;border-radius:99px;font-size:11px;font-weight:500}
+.cor{background:rgba(255,107,0,.15);color:var(--or)}
+.ctl{background:rgba(0,212,170,.15);color:var(--tl)}
+.cgr{background:rgba(16,185,129,.15);color:var(--ok)}
+.dv{height:1px;background:var(--bd);margin:12px 0}
+.fr{display:flex;justify-content:space-between;padding:5px 0;font-size:13px}
+.ftl{border-top:1px solid var(--bd);margin-top:6px;padding-top:10px}
+.bnav{position:fixed;bottom:0;left:0;right:0;background:var(--bg2);border-top:1px solid var(--bd);display:flex;padding:8px 0 18px;z-index:100}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:4px}
+.ni.on .nl{color:var(--or)}
+.ni.on .nic{transform:scale(1.12)}
+.nic{font-size:21px;transition:transform .2s}
+.nl{font-size:10px;font-weight:500;color:var(--t2)}
+.toast{position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-120px);background:var(--cd);border:1px solid var(--bd);padding:12px 20px;border-radius:99px;font-weight:500;font-size:14px;z-index:9999;transition:transform .3s;white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.ok{border-color:var(--ok)}
+.toast.er{border-color:var(--er)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;display:flex;align-items:flex-end;opacity:0;pointer-events:none;transition:opacity .3s}
+.overlay.open{opacity:1;pointer-events:all}
+.modal{background:var(--bg2);width:100%;border-radius:24px 24px 0 0;padding:22px 22px 38px;transform:translateY(100%);transition:transform .35s}
+.overlay.open .modal{transform:translateY(0)}
+.mhdl{width:36px;height:4px;border-radius:99px;background:var(--bd);margin:0 auto 18px}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--bd);border-radius:99px}
+</style>
+</head>
+<body>
+
+<!-- LOGIN - FIRST PAGE (no splash, goes straight here) -->
+<div id="pg-login" class="page show">
+  <div style="padding:56px 24px 28px;background:linear-gradient(180deg,var(--bg2),transparent)">
+    <div class="logo"><div class="logo-ic">🔧</div><div class="logo-tx">Fix<b>Kar</b></div></div>
+    <h2 style="font-size:26px;font-weight:700">Welcome 👋</h2>
+    <p style="color:var(--t2);margin-top:6px">Pakistan's #1 Roadside Assistance App</p>
+  </div>
+  <div style="flex:1;padding:0 24px 40px">
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+      <div onclick="go('pg-role')" style="display:flex;align-items:center;gap:14px;padding:15px 16px;border-radius:14px;background:var(--cd);border:1px solid var(--bd);cursor:pointer;font-family:Poppins;font-weight:500"><span style="font-size:20px;width:32px;text-align:center">📱</span>Continue with Phone (OTP)</div>
+      <div onclick="go('pg-role')" style="display:flex;align-items:center;gap:14px;padding:15px 16px;border-radius:14px;background:var(--cd);border:1px solid var(--bd);cursor:pointer;font-family:Poppins;font-weight:500"><span style="font-size:20px;width:32px;text-align:center">🔵</span>Continue with Google</div>
+      <div onclick="go('pg-role')" style="display:flex;align-items:center;gap:14px;padding:15px 16px;border-radius:14px;background:var(--cd);border:1px solid var(--bd);cursor:pointer;font-family:Poppins;font-weight:500"><span style="font-size:20px;width:32px;text-align:center">📘</span>Continue with Facebook</div>
+      <div onclick="go('pg-role')" style="display:flex;align-items:center;gap:14px;padding:15px 16px;border-radius:14px;background:var(--cd);border:1px solid var(--bd);cursor:pointer;font-family:Poppins;font-weight:500"><span style="font-size:20px;width:32px;text-align:center">🍎</span>Continue with Apple</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;color:var(--t2);font-size:13px;margin:16px 0"><div style="flex:1;height:1px;background:var(--bd)"></div>or sign in with email<div style="flex:1;height:1px;background:var(--bd)"></div></div>
+    <label class="lbl">Email Address</label>
+    <input class="inp" type="email" placeholder="you@example.com"/>
+    <label class="lbl">Password</label>
+    <input class="inp" type="password" placeholder="••••••••"/>
+    <button class="btn bp bfw" style="margin-bottom:10px" onclick="go('pg-role')">Sign In</button>
+    <button class="btn bg2 bfw" onclick="go('pg-role')">👤 Continue as Guest</button>
+  </div>
+</div>
+
+<!-- ROLE SELECT -->
+<div id="pg-role" class="page" style="padding:56px 24px 40px">
+  <div style="text-align:center">
+    <div class="logo" style="justify-content:center;margin-bottom:28px"><div class="logo-ic">🔧</div><div class="logo-tx">Fix<b>Kar</b></div></div>
+    <h2 style="font-size:24px;font-weight:700">I am a...</h2>
+    <p style="color:var(--t2);margin-top:6px">Choose your role</p>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px;margin-top:28px">
+    <div onclick="go('pg-home')" style="display:flex;align-items:center;gap:18px;padding:22px;border-radius:16px;border:2px solid var(--bd);cursor:pointer"><span style="font-size:46px">🚗</span><div><div style="font-family:Poppins;font-weight:600;font-size:17px">Vehicle Owner</div><div style="color:var(--t2);font-size:13px;margin-top:3px">I need roadside help</div></div></div>
+    <div onclick="go('pg-mech')" style="display:flex;align-items:center;gap:18px;padding:22px;border-radius:16px;border:2px solid var(--bd);cursor:pointer"><span style="font-size:46px">🔧</span><div><div style="font-family:Poppins;font-weight:600;font-size:17px">Mechanic / Workshop</div><div style="color:var(--t2);font-size:13px;margin-top:3px">I provide repair services</div></div></div>
+  </div>
+  <div style="margin-top:20px"><button class="btn bg2 bfw" onclick="go('pg-login')">← Back</button></div>
+</div>
+
+<!-- HOME -->
+<div id="pg-home" class="page">
+  <div style="background:linear-gradient(180deg,var(--bg2),transparent);padding:50px 20px 18px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+      <div><div style="font-size:12px;color:var(--t2)">Good evening 🌙</div><div style="font-family:Poppins;font-weight:700;font-size:21px;margin-top:1px">Ali <span style="color:var(--or)">Hassan</span></div></div>
+      <div onclick="toast('🔔 No new notifications','ok')" style="width:42px;height:42px;border-radius:12px;background:var(--cd);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;position:relative">🔔<div style="position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--or);border:2px solid var(--bg2)"></div></div>
+    </div>
+    <button onclick="go('pg-emer')" style="width:100%;padding:18px 20px;background:linear-gradient(135deg,#EF4444,#C0392B);border-radius:18px;border:none;display:flex;align-items:center;justify-content:space-between;cursor:pointer;box-shadow:0 8px 28px rgba(239,68,68,.4)">
+      <div style="display:flex;align-items:center;gap:14px"><div style="width:50px;height:50px;border-radius:14px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:24px">🚨</div><div style="text-align:left"><div style="font-family:Poppins;font-weight:700;font-size:17px;color:#fff">Emergency SOS</div><div style="color:rgba(255,255,255,.75);font-size:12px;margin-top:2px">Tap for instant roadside help</div></div></div>
+      <span style="font-size:22px;color:rgba(255,255,255,.7)">›</span>
+    </button>
+  </div>
+  <div style="flex:1;padding:0 20px 90px;overflow-y:auto">
+    <div style="background:linear-gradient(135deg,var(--or),#FF8C38,#FFB347);border-radius:16px;padding:18px;display:flex;align-items:center;justify-content:space-between;margin-top:18px"><div style="font-family:Poppins"><div style="background:rgba(255,255,255,.2);padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;display:inline-block;margin-bottom:5px">LIMITED OFFER</div><div style="font-size:17px;font-weight:700">First Service FREE!</div><div style="font-size:12px;opacity:.85;margin-top:2px">Use code: FIXKAR2024</div></div><div style="font-size:50px">🎁</div></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin:22px 0 12px"><div style="font-family:Poppins;font-weight:600;font-size:15px">What do you need?</div><div onclick="go('pg-emer')" style="color:var(--or);font-size:13px;font-weight:500;cursor:pointer">See all</div></div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+      <div onclick="go('pg-emer')" style="background:var(--cd);border-radius:10px;padding:12px 6px;text-align:center;cursor:pointer;border:1px solid var(--bd)"><div style="font-size:24px;margin-bottom:5px">🔋</div><div style="font-size:10px;color:var(--t2);font-weight:500">Battery</div></div>
+      <div onclick="go('pg-emer')" style="background:var(--cd);border-radius:10px;padding:12px 6px;text-align:center;cursor:pointer;border:1px solid var(--bd)"><div style="font-size:24px;margin-bottom:5px">🛞</div><div style="font-size:10px;color:var(--t2);font-weight:500">Tyre</div></div>
+      <div onclick="go('pg-emer')" style="background:var(--cd);border-radius:10px;padding:12px 6px;text-align:center;cursor:pointer;border:1px solid var(--bd)"><div style="font-size:24px;margin-bottom:5px">⛽</div><div style="font-size:10px;color:var(--t2);font-weight:500">Fuel</div></div>
+      <div onclick="go('pg-emer')" style="background:var(--cd);border-radius:10px;padding:12px 6px;text-align:center;cursor:pointer;border:1px solid var(--bd)"><div style="font-size:24px;margin-bottom:5px">🚛</div><div style="font-size:10px;color:var(--t2);font-weight:500">Towing</div></div>
+      <div onclick="go('pg-emer')" style="background:var(--cd);border-radius:10px;padding:12px 6px;text-align:center;cursor:pointer;border:1px solid var(--bd)"><div style="font-size:24px;margin-bottom:5px">🔥</div><div style="font-size:10px;color:var(--t2);font-weight:500">Overheat</div></div>
+      <div onclick="go('pg-emer')" style="background:var(--cd);border-radius:10px;padding:12px 6px;text-align:center;cursor:pointer;border:1px solid var(--bd)"><div style="font-size:24px;margin-bottom:5px">🔑</div><div style="font-size:10px;color:var(--t2);font-weight:500">Lockout</div></div>
+      <div onclick="go('pg-emer')" style="background:var(--cd);border-radius:10px;padding:12px 6px;text-align:center;cursor:pointer;border:1px solid var(--bd)"><div style="font-size:24px;margin-bottom:5px">⚙️</div><div style="font-size:10px;color:var(--t2);font-weight:500">Engine</div></div>
+      <div onclick="go('pg-emer')" style="background:var(--cd);border-radius:10px;padding:12px 6px;text-align:center;cursor:pointer;border:1px solid var(--bd)"><div style="font-size:24px;margin-bottom:5px">🔌</div><div style="font-size:10px;color:var(--t2);font-weight:500">Electrical</div></div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin:22px 0 12px"><div style="font-family:Poppins;font-weight:600;font-size:15px">Nearby Mechanics</div></div>
+    <div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:4px;scrollbar-width:none">
+      <div style="min-width:155px;background:var(--cd);border-radius:14px;padding:14px;border:1px solid var(--bd);flex-shrink:0"><div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--or),var(--or2));display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:8px">👨‍🔧</div><div style="font-family:Poppins;font-weight:600;font-size:13px">Usman Raza</div><div style="color:var(--t2);font-size:11px;margin-top:1px">Car & Bike Expert</div><div style="display:flex;justify-content:space-between;margin-top:8px"><span style="color:var(--wn);font-size:12px;font-weight:600">⭐ 4.9</span><span style="color:var(--tl);font-size:11px;font-weight:500">1.2 km</span></div><div class="vb">✓ Verified</div></div>
+      <div style="min-width:155px;background:var(--cd);border-radius:14px;padding:14px;border:1px solid var(--bd);flex-shrink:0"><div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--or),var(--or2));display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:8px">👨‍🔧</div><div style="font-family:Poppins;font-weight:600;font-size:13px">Imran Malik</div><div style="color:var(--t2);font-size:11px;margin-top:1px">Engine Specialist</div><div style="display:flex;justify-content:space-between;margin-top:8px"><span style="color:var(--wn);font-size:12px;font-weight:600">⭐ 4.7</span><span style="color:var(--tl);font-size:11px;font-weight:500">2.4 km</span></div><div class="vb">✓ Verified</div></div>
+      <div style="min-width:155px;background:var(--cd);border-radius:14px;padding:14px;border:1px solid var(--bd);flex-shrink:0"><div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--or),var(--or2));display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:8px">👨‍🔧</div><div style="font-family:Poppins;font-weight:600;font-size:13px">Tariq Ahmed</div><div style="color:var(--t2);font-size:11px;margin-top:1px">Bike Mechanic</div><div style="display:flex;justify-content:space-between;margin-top:8px"><span style="color:var(--wn);font-size:12px;font-weight:600">⭐ 4.8</span><span style="color:var(--tl);font-size:11px;font-weight:500">3.1 km</span></div><div class="vb">✓ Verified</div></div>
+    </div>
+    <div style="font-family:Poppins;font-weight:600;font-size:15px;margin:22px 0 12px">Recent Bookings</div>
+    <div style="background:var(--cd);border-radius:14px;border:1px solid var(--bd);overflow:hidden">
+      <div onclick="go('pg-track')" style="padding:14px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--bd)"><div style="font-size:26px">🔋</div><div style="flex:1"><div style="font-weight:600;font-size:14px">Battery Jump Start</div><div style="color:var(--t2);font-size:12px;margin-top:2px">Usman Raza · 2 days ago</div></div><div class="ch cgr">Completed</div></div>
+      <div onclick="go('pg-track')" style="padding:14px;display:flex;align-items:center;gap:12px"><div style="font-size:26px">🛞</div><div style="flex:1"><div style="font-weight:600;font-size:14px">Tyre Puncture Repair</div><div style="color:var(--t2);font-size:12px;margin-top:2px">Imran Malik · 1 week ago</div></div><div class="ch cgr">Completed</div></div>
+    </div>
+  </div>
+  <div class="bnav">
+    <div class="ni on" onclick="bnav(this,'pg-home')"><div class="nic">🏠</div><div class="nl">Home</div></div>
+    <div class="ni" onclick="bnav(this,'pg-emer')"><div class="nic">🚨</div><div class="nl">Emergency</div></div>
+    <div class="ni" onclick="toast('📋 Bookings coming soon')"><div class="nic">📋</div><div class="nl">Bookings</div></div>
+    <div class="ni" onclick="bnav(this,'pg-prof')"><div class="nic">👤</div><div class="nl">Profile</div></div>
+  </div>
+</div>
+
+<!-- EMERGENCY -->
+<div id="pg-emer" class="page">
+  <div style="background:linear-gradient(180deg,rgba(239,68,68,.12),transparent);padding:50px 20px 18px"><div class="bk" onclick="back()">←</div><h2 style="font-size:24px;font-weight:700">🚨 Request Help</h2><p style="color:var(--t2);margin-top:5px">Select your issue — help arrives in minutes</p></div>
+  <div style="flex:1;padding:20px;overflow-y:auto;padding-bottom:100px">
+    <p style="font-weight:600;margin-bottom:10px">What's the problem?</p>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:18px">
+      <div class="ii" onclick="selI(this)"><span style="font-size:26px">🔋</span><span style="font-family:Poppins;font-weight:500;font-size:13px">Dead Battery</span></div>
+      <div class="ii" onclick="selI(this)"><span style="font-size:26px">🛞</span><span style="font-family:Poppins;font-weight:500;font-size:13px">Flat Tyre</span></div>
+      <div class="ii" onclick="selI(this)"><span style="font-size:26px">⛽</span><span style="font-family:Poppins;font-weight:500;font-size:13px">No Fuel</span></div>
+      <div class="ii" onclick="selI(this)"><span style="font-size:26px">🚛</span><span style="font-family:Poppins;font-weight:500;font-size:13px">Need Towing</span></div>
+      <div class="ii" onclick="selI(this)"><span style="font-size:26px">🔥</span><span style="font-family:Poppins;font-weight:500;font-size:13px">Overheating</span></div>
+      <div class="ii" onclick="selI(this)"><span style="font-size:26px">🔑</span><span style="font-family:Poppins;font-weight:500;font-size:13px">Car Lockout</span></div>
+      <div class="ii" onclick="selI(this)"><span style="font-size:26px">⚙️</span><span style="font-family:Poppins;font-weight:500;font-size:13px">Engine Failure</span></div>
+      <div class="ii" onclick="selI(this)"><span style="font-size:26px">🔌</span><span style="font-family:Poppins;font-weight:500;font-size:13px">Electrical</span></div>
+      <div class="ii" onclick="selI(this)"><span style="font-size:26px">🛢️</span><span style="font-family:Poppins;font-weight:500;font-size:13px">Oil Leak</span></div>
+      <div class="ii" onclick="selI(this)"><span style="font-size:26px">🏍️</span><span style="font-family:Poppins;font-weight:500;font-size:13px">Bike Chain</span></div>
+      <div class="ii" onclick="selI(this)"><span style="font-size:26px">❄️</span><span style="font-family:Poppins;font-weight:500;font-size:13px">AC Problem</span></div>
+      <div class="ii" onclick="selI(this)"><span style="font-size:26px">❓</span><span style="font-family:Poppins;font-weight:500;fo
